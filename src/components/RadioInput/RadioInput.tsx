@@ -9,7 +9,7 @@ export function RadioInput({
   onSelect,
 }: RadioInputProps) {
   return (
-    <Styled.Option checked={checked} onClick={() => onSelect()}>
+    <Styled.Option active={checked} onClick={() => onSelect()}>
       <Styled.Input
         checked={checked}
         name={name}

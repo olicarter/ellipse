@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ThemeProvider } from 'styled-components'
 
-import { App } from './components'
+import { App } from './components/App'
 import typeDefs from './typeDefs'
 import reportWebVitals from './reportWebVitals'
 
@@ -21,7 +21,7 @@ const colors = {
 
 const theme = {
   colors: {
-    background: colors.grayDark,
+    background: colors.gray,
     black: colors.black,
     blue: colors.blue,
     gray: colors.gray,

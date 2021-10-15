@@ -2,6 +2,8 @@ lockfileVersion: 5.3
 
 specifiers:
   '@apollo/client': ^3.4.16
+  '@mdi/js': ^6.2.95
+  '@mdi/react': ^1.5.0
   '@testing-library/jest-dom': ^5.11.4
   '@testing-library/react': ^11.1.0
   '@testing-library/user-event': ^12.1.10
@@ -25,6 +27,8 @@ specifiers:
 
 dependencies:
   '@apollo/client': 3.4.16_graphql@15.6.1+react@17.0.2
+  '@mdi/js': 6.2.95
+  '@mdi/react': 1.5.0
   '@testing-library/jest-dom': 5.14.1
   '@testing-library/react': 11.2.7_react-dom@17.0.2+react@17.0.2
   '@testing-library/user-event': 12.8.3
@@ -1893,6 +1897,14 @@ packages:
       '@types/node': 12.20.33
       '@types/yargs': 15.0.14
       chalk: 4.1.2
+    dev: false
+
+  /@mdi/js/6.2.95:
+    resolution: {integrity: sha512-fbD22sEBathqVSQWcxshEtzhhRNFmMnV64z6T7DClRbQ9N5axorykt3Suv2zPzLDyiqH7UhNRu0VPvPCPDNpnQ==}
+    dev: false
+
+  /@mdi/react/1.5.0:
+    resolution: {integrity: sha512-NztRgUxSYD+ImaKN94Tg66VVVqXj4SmlDGzZoz48H9riJ+Awha56sfXH2fegw819NWo7KI3oeS1Es0lNQqwr0w==}
     dev: false
 
   /@nodelib/fs.scandir/2.1.5:

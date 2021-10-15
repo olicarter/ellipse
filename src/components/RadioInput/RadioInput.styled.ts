@@ -1,29 +1,33 @@
 import styled from 'styled-components'
-import { darken } from 'polished'
+import { darken, readableColor, lighten } from 'polished'
 
-import type { RadioInputProps } from './RadioInput.types'
-
-export const Option = styled.div<
-  Pick<RadioInputProps, 'checked'> & { onClick: () => void }
->(
+export const Option = styled.div<{
+  active: boolean
+  onClick: () => void
+}>(
   ({
-    checked,
+    active,
     theme: {
-      colors: { gray, grayDark },
+      colors: { gray, blue },
     },
-  }) => ({
-    alignItems: 'center',
-    border: `2px solid ${checked ? grayDark : darken(0.1, gray)}`,
-    background: gray,
-    borderRadius: '0.5rem',
-    cursor: 'pointer',
-    display: 'grid',
-    gap: '0.5rem',
-    gridTemplateColumns: 'auto 1fr',
-    marginBottom: '1rem',
-    padding: '0.5rem',
-    userSelect: 'none',
-  }),
+  }) => {
+    const backgroundColor = active ? lighten(0.75, blue) : gray
+
+    return {
+      alignItems: 'center',
+      border: '3px solid',
+      borderColor: active ? blue : darken(0.1, gray),
+      backgroundColor,
+      borderRadius: '0.5rem',
+      color: readableColor(backgroundColor),
+      cursor: 'pointer',
+      display: 'grid',
+      gap: '0.5rem',
+      gridTemplateColumns: 'auto 1fr',
+      padding: '1rem 1rem 1rem 0.5rem',
+      userSelect: 'none',
+    }
+  },
 )
 
 export const Input = styled.input(() => ({
@@ -31,6 +35,7 @@ export const Input = styled.input(() => ({
 }))
 
 export const Heading = styled.h3({
+  fontSize: '1rem',
   lineHeight: 1,
   margin: '0 0 0.5rem',
 })
