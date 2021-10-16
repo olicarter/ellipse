@@ -1,14 +1,14 @@
 import { useHistory } from 'react-router-dom'
 import Icon from '@mdi/react'
 
-import { useQuery } from 'src/hooks'
+import { useQueryParams } from 'src/hooks'
 
 import type { AppointmentMediumProps } from './AppointmentMedium.types'
 import * as Styled from './AppointmentMedium.styled'
 
 export function AppointmentMedium({ icon, type }: AppointmentMediumProps) {
   const { push } = useHistory()
-  const query = useQuery()
+  const query = useQueryParams()
 
   function toggle() {
     const selectedMediums = query.getAll('medium')

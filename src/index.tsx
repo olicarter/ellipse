@@ -7,8 +7,29 @@ import { ThemeProvider } from 'styled-components'
 import { App } from './components/App'
 import typeDefs from './typeDefs'
 import reportWebVitals from './reportWebVitals'
+import { specialismsVar } from './cache'
 
-const client = new ApolloClient({ cache: new InMemoryCache(), typeDefs })
+const client = new ApolloClient({
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          specialism: {
+            read(_, { args }) {
+              return specialismsVar().find(({ id }) => id === args?.id)
+            },
+          },
+          specialisms: {
+            read() {
+              return specialismsVar()
+            },
+          },
+        },
+      },
+    },
+  }),
+  typeDefs,
+})
 
 const colors = {
   black: '#000',

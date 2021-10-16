@@ -1,14 +1,17 @@
 import { useHistory } from 'react-router-dom'
 import { mdiForum, mdiPhone, mdiVideo } from '@mdi/js'
+import { useQuery } from '@apollo/client'
 
-import { useQuery } from 'src/hooks'
+import { useQueryParams } from 'src/hooks'
 import { Box, Columns } from 'src/components/Core'
 import { AppointmentMedium } from 'src/components/AppointmentMedium'
+import { AppointmentSpecialism } from 'src/components/AppointmentSpecialism'
 import { Heading } from 'src/components/Heading'
 import { RadioInput } from 'src/components/RadioInput'
 import { Title } from 'src/components/Title'
-import counsellors from 'src/counsellor-mock.json'
 
+import { GetSpecialismsData } from './App.types'
+import { queries } from './App.gql'
 import * as Styled from './App.styled'
 
 const mediums = [
@@ -17,16 +20,12 @@ const mediums = [
   { icon: mdiVideo, type: 'video' },
 ]
 
-const specialisms = counsellors
-  .reduce<string[]>(
-    (prev, curr) => Array.from(new Set([...prev, ...curr.specialisms])),
-    [],
-  )
-  .sort((a, b) => a.localeCompare(b))
-
 export function App() {
   const { push } = useHistory()
-  const query = useQuery()
+  const query = useQueryParams()
+
+  const { data } = useQuery<GetSpecialismsData>(queries.GET_SPECIALISMS)
+  const specialisms = data?.specialisms || []
 
   const selectedSpecialisms = query.getAll('specialism')
   const type = query.get('type')
@@ -83,26 +82,8 @@ export function App() {
                 <Heading>What topics would you like to discuss?</Heading>
 
                 <Styled.Topics>
-                  {specialisms.map(specialism => (
-                    <Styled.Topic
-                      key={specialism}
-                      active={selectedSpecialisms.includes(specialism)}
-                      onClick={() => {
-                        if (selectedSpecialisms.includes(specialism)) {
-                          const newSelectedSpecialisms =
-                            selectedSpecialisms.filter(i => i !== specialism)
-                          query.delete('specialism')
-                          newSelectedSpecialisms.forEach(m => {
-                            query.append('specialism', m)
-                          })
-                        } else {
-                          query.append('specialism', specialism)
-                        }
-                        push(`?${query.toString()}`)
-                      }}
-                    >
-                      {specialism}
-                    </Styled.Topic>
+                  {specialisms.map(({ id }) => (
+                    <AppointmentSpecialism key={id} id={id} />
                   ))}
 
                   {!!selectedSpecialisms.length && (
