@@ -24,7 +24,7 @@ export function AppointmentList() {
     variables: {
       filter: {
         date: selectedDate,
-        media: selectedAppointmentMedium,
+        medium: selectedAppointmentMedium,
         specialisms: selectedSpecialisms,
         type: selectedType,
       },

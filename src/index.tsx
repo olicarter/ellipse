@@ -5,7 +5,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ThemeProvider } from 'styled-components'
 import { compareAsc, isSameDay, parseISO } from 'date-fns'
 
-import { AppointmentType } from 'src/types'
+import { AppointmentMedium, AppointmentType } from 'src/types'
 
 import { App } from './components/App'
 import typeDefs from './typeDefs'
@@ -27,17 +27,15 @@ const client = new ApolloClient({
           appointments: {
             read(_, { args }) {
               const date: string = args?.filter.date
-              const media: string[] = args?.filter.media
+              const medium: AppointmentMedium = args?.filter.medium
               const specialisms: string[] = args?.filter.specialisms
               const type: AppointmentType = args?.filter.type
               const orderBy = args?.orderBy
 
               const appointments = appointmentsVar().filter(
                 ({ counsellor, startsAt }) => {
-                  const mediaFilter = media.length
-                    ? counsellor.appointmentMedia.some(name =>
-                        media.includes(name),
-                      )
+                  const mediumFilter = medium
+                    ? counsellor.appointmentMedia.includes(medium)
                     : true
                   const specialismsFilter = specialisms.length
                     ? specialisms.every(specialism =>
@@ -49,10 +47,13 @@ const client = new ApolloClient({
                   const dateFilter = date
                     ? isSameDay(parseISO(date), parseISO(startsAt))
                     : true
+                  const typeFilter = type
+                    ? counsellor.appointmentTypes.includes(type)
+                    : true
                   return (
-                    mediaFilter &&
+                    mediumFilter &&
                     specialismsFilter &&
-                    counsellor.appointmentTypes.includes(type) &&
+                    typeFilter &&
                     dateFilter
                   )
                 },
@@ -102,7 +103,7 @@ const colors = {
 
 const theme = {
   colors: {
-    background: colors.gray,
+    background: colors.white,
     black: colors.black,
     blue: colors.blue,
     error: colors.red,

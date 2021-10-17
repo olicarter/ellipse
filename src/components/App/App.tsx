@@ -2,7 +2,9 @@ import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import sortBy from 'lodash.sortby'
-import { useIntersection, useMedia } from 'react-use'
+import { useIntersection, useMedia, useWindowSize } from 'react-use'
+import Particles from 'react-particles-js'
+import { useTheme } from 'styled-components'
 
 import { useQueryParams } from 'src/hooks'
 import { Box, Columns, FormGroup, Main } from 'src/components/Core'
@@ -27,8 +29,13 @@ export function App() {
   const { push } = useHistory()
   const query = useQueryParams()
 
+  const {
+    colors: { gray, teal },
+  } = useTheme()
+
   const confirmationButtonRef = useRef(null)
 
+  const { height: windowHeight, width: windowWidth } = useWindowSize()
   const isLargeScreen = useMedia('(min-width: 1080px)')
   const intersection = useIntersection(confirmationButtonRef, {
     root: null,
@@ -56,6 +63,35 @@ export function App() {
   return (
     <>
       <Styled.Global />
+
+      <Particles
+        height={`${windowHeight}px`}
+        params={{
+          particles: {
+            number: { value: 3 },
+            color: { value: [gray, teal] },
+            shape: { type: 'circle' },
+            opacity: { value: 1, anim: { enable: false } },
+            size: { value: { min: 50, max: 300 } },
+            move: {
+              enable: true,
+              speed: 2,
+              out_mode: 'out',
+              bounce: false,
+            },
+          },
+          interactivity: {
+            events: {
+              onhover: { enable: false },
+              onclick: { enable: false },
+              resize: true,
+            },
+          },
+          retina_detect: true,
+        }}
+        style={{ left: 0, position: 'fixed', top: 0, zIndex: -1 }}
+        width={`${windowWidth}px`}
+      />
 
       <ModalAppointmentBookingConfirmation visible={confirmationModalVisible} />
 

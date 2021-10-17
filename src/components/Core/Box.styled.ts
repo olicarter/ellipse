@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { transparentize } from 'polished'
 
 export const Box = styled.div(
   ({
@@ -6,7 +7,8 @@ export const Box = styled.div(
       colors: { grayDark, white },
     },
   }) => ({
-    background: white,
+    backdropFilter: 'blur(1rem)',
+    background: transparentize(0.5, white),
     border: '3px solid',
     borderColor: grayDark,
     borderRadius: '1rem',

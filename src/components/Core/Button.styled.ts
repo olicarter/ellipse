@@ -5,14 +5,14 @@ export const Button = styled.button<{ disabled?: boolean }>(
   ({
     disabled = false,
     theme: {
-      colors: { blue },
+      colors: { teal },
     },
   }) => ({
     alignItems: 'center',
-    background: blue,
+    background: teal,
     border: 'none',
     borderRadius: '100px',
-    color: readableColor(blue),
+    color: readableColor(teal),
     cursor: disabled ? 'not-allowed' : 'pointer',
     display: 'flex',
     fontSize: '1rem',
