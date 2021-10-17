@@ -1,6 +1,8 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { darken, readableColor, lighten } from 'polished'
 
+import { Box } from 'src/components/Core'
+
 export const Global = createGlobalStyle(
   ({
     theme: {
@@ -29,8 +31,8 @@ export const Main = styled.main({
   width: '100%',
 })
 
-export const FormGroup = styled.section({
-  ':not(:last-child)': { marginBottom: '3rem' },
+export const FilterBox = styled(Box)({
+  alignSelf: 'flex-start',
 })
 
 export const Options = styled.div({

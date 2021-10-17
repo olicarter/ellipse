@@ -1,24 +1,24 @@
 import { useHistory } from 'react-router-dom'
-import { mdiForum, mdiPhone, mdiVideo } from '@mdi/js'
 import { useQuery } from '@apollo/client'
+import sortBy from 'lodash.sortby'
 
 import { useQueryParams } from 'src/hooks'
-import { Box, Columns } from 'src/components/Core'
-import { AppointmentMedium } from 'src/components/AppointmentMedium'
+import { Box, Columns, FormGroup } from 'src/components/Core'
+import { AppointmentList } from 'src/components/AppointmentList'
+import { AppointmentMediaControl } from 'src/components/AppointmentMediaControl'
 import { AppointmentSpecialism } from 'src/components/AppointmentSpecialism'
 import { Heading } from 'src/components/Heading'
 import { RadioInput } from 'src/components/RadioInput'
 import { Title } from 'src/components/Title'
+import availabilityMock from 'src/availability-mock.json'
 
 import { GetSpecialismsData } from './App.types'
 import { queries } from './App.gql'
 import * as Styled from './App.styled'
 
-const mediums = [
-  { icon: mdiForum, type: 'chat' },
-  { icon: mdiPhone, type: 'phone' },
-  { icon: mdiVideo, type: 'video' },
-]
+// Get earliest date from mock availability date
+const today = sortBy(Object.values(availabilityMock).flat(), 'datetime')[0]
+  .datetime
 
 export function App() {
   const { push } = useHistory()
@@ -30,6 +30,11 @@ export function App() {
   const selectedSpecialisms = query.getAll('specialism')
   const type = query.get('type')
 
+  if (!query.get('date')) {
+    query.set('date', today)
+    push(`?${query.toString()}`)
+  }
+
   return (
     <>
       <Styled.Global />
@@ -39,8 +44,8 @@ export function App() {
           <Title>Book an appointment</Title>
 
           <Columns gap="4vmin" minWidth="480px">
-            <Box>
-              <Styled.FormGroup>
+            <Styled.FilterBox>
+              <FormGroup>
                 <Heading>What type of appointment do you need?</Heading>
 
                 <Styled.Options>
@@ -66,19 +71,15 @@ export function App() {
                     }}
                   />
                 </Styled.Options>
-              </Styled.FormGroup>
+              </FormGroup>
 
-              <Styled.FormGroup>
+              <FormGroup>
                 <Heading>How would you like to communicate?</Heading>
 
-                <Columns columns={mediums.length} gap="1rem">
-                  {mediums.map(medium => (
-                    <AppointmentMedium icon={medium.icon} type={medium.type} />
-                  ))}
-                </Columns>
-              </Styled.FormGroup>
+                <AppointmentMediaControl />
+              </FormGroup>
 
-              <Styled.FormGroup>
+              <FormGroup>
                 <Heading>What topics would you like to discuss?</Heading>
 
                 <Styled.Topics>
@@ -97,15 +98,13 @@ export function App() {
                     </Styled.ClearSpecialismsButton>
                   )}
                 </Styled.Topics>
-              </Styled.FormGroup>
-            </Box>
+              </FormGroup>
+            </Styled.FilterBox>
 
             <Box>
-              <Styled.FormGroup>
-                <Heading>
-                  These are our available consultants, matching your criteria
-                </Heading>
-              </Styled.FormGroup>
+              <FormGroup>
+                <AppointmentList />
+              </FormGroup>
             </Box>
           </Columns>
         </Styled.Main>

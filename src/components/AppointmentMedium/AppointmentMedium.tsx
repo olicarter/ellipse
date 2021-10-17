@@ -1,37 +1,53 @@
 import { useHistory } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
 import Icon from '@mdi/react'
 
 import { useQueryParams } from 'src/hooks'
 
-import type { AppointmentMediumProps } from './AppointmentMedium.types'
+import type {
+  AppointmentMediumProps,
+  GetAppointmentMediumData,
+  GetAppointmentMediumVars,
+} from './AppointmentMedium.types'
+import { queries } from './AppointmentMedium.gql'
 import * as Styled from './AppointmentMedium.styled'
 
-export function AppointmentMedium({ icon, type }: AppointmentMediumProps) {
+export function AppointmentMedium({ id }: AppointmentMediumProps) {
   const { push } = useHistory()
   const query = useQueryParams()
 
+  const { data } = useQuery<GetAppointmentMediumData, GetAppointmentMediumVars>(
+    queries.GET_APPOINTMENT_MEDIUM,
+    { variables: { id } },
+  )
+
+  if (!data?.appointmentMedium) return null
+
+  const { icon, name } = data?.appointmentMedium || {}
+
   function toggle() {
-    const selectedMediums = query.getAll('medium')
-    if (selectedMediums.includes(type)) {
-      const newSelectedMediums = selectedMediums.filter(i => i !== type)
+    const currSelectedNames = query.getAll('medium')
+
+    if (currSelectedNames.includes(name)) {
+      const newSelectedNames = currSelectedNames.filter(n => n !== name)
       query.delete('medium')
-      newSelectedMediums.forEach(m => query.append('medium', m))
+      newSelectedNames.forEach(n => query.append('medium', n))
     } else {
-      query.append('medium', type)
+      query.append('medium', name)
     }
     push(`?${query.toString()}`)
   }
 
   return (
     <Styled.AppointmentMedium
-      active={query.getAll('medium').includes(type)}
+      active={query.getAll('medium').includes(name)}
       onClick={toggle}
     >
       <Styled.Icon>
         <Icon path={icon} size={1} />
       </Styled.Icon>
 
-      <Styled.Heading>{type}</Styled.Heading>
+      <Styled.Heading>{name}</Styled.Heading>
     </Styled.AppointmentMedium>
   )
 }

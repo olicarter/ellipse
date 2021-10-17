@@ -1,12 +1,27 @@
 import { makeVar } from '@apollo/client'
 import { v4 as uuid } from 'uuid'
+import { mdiForum, mdiPhone, mdiVideo } from '@mdi/js'
 
-import counsellors from 'src/counsellor-mock.json'
+import {
+  Appointment,
+  AppointmentMedium,
+  AppointmentType,
+  Counsellor,
+  Specialism,
+} from 'src/types'
+import availabilityMock from 'src/availability-mock.json'
+import counsellorsMock from 'src/counsellor-mock.json'
+
+export const appointmentMediaVar = makeVar<AppointmentMedium[]>([
+  { id: uuid(), icon: mdiForum, name: 'chat' },
+  { id: uuid(), icon: mdiPhone, name: 'phone' },
+  { id: uuid(), icon: mdiVideo, name: 'video' },
+])
 
 // Extract unique specialisms from mock data and map to array of objects
 // with unique IDs to mimic structure of data fetched from GraphQL API
-export const specialismsVar = makeVar(
-  counsellors
+export const specialismsVar = makeVar<Specialism[]>(
+  counsellorsMock
     .reduce<string[]>(
       (prev, curr) => Array.from(new Set([...prev, ...curr.specialisms])),
       [],
@@ -14,3 +29,58 @@ export const specialismsVar = makeVar(
     .sort((a, b) => a.localeCompare(b))
     .map(name => ({ id: uuid(), name })),
 )
+
+export const counsellorsVar = makeVar<Counsellor[]>(
+  counsellorsMock.map(
+    (
+      {
+        id: counsellorId,
+        appointment_mediums,
+        appointment_types,
+        specialisms,
+        ...rest
+      },
+      index,
+    ) => ({
+      id: counsellorId,
+      // appointments: availabilityData[counsellorId].map(
+      //   ({ id: appointmentId, datetime: startsAt }) => ({
+      //     id: appointmentId,
+      //     startsAt,
+      //   }),
+      // ),
+      appointmentMedia: appointmentMediaVar().filter(({ name }) =>
+        appointment_mediums.includes(name),
+      ),
+      appointmentTypes: appointment_types as AppointmentType[],
+      avatar: `https://i.pravatar.cc/64?u=${counsellorId}`,
+      specialisms: specialismsVar().filter(({ name }) =>
+        specialisms.includes(name),
+      ),
+      ...rest,
+    }),
+  ),
+)
+
+type AvailabilityData = {
+  [key: string]: {
+    id: string
+    datetime: string
+  }[]
+}
+
+const availabilityData: AvailabilityData = availabilityMock
+
+const a: Appointment[] = []
+
+Object.entries(availabilityData).forEach(([counsellorId, appointments]) => {
+  appointments.forEach(({ id, datetime }) =>
+    a.push({
+      id,
+      counsellor: counsellorsVar().find(({ id }) => id === counsellorId)!,
+      startsAt: datetime,
+    }),
+  )
+})
+
+export const appointmentsVar = makeVar<Appointment[]>(a)

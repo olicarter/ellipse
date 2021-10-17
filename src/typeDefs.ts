@@ -7,17 +7,14 @@ export default gql`
   }
 
   enum AppointmentMedium {
+    chat
     phone
     video
   }
 
-  type Counsellor {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    appointmentTypes: [AppointmentType]!
-    appointmentMediums: [AppointmentMedium!]!
-    specialisms: [String]!
+  enum AppointmentsOrderBy {
+    startsAt_ASC
+    startsAt_DESC
   }
 
   type Appointment {
@@ -26,8 +23,38 @@ export default gql`
     startsAt: String!
   }
 
+  type AppointmentsFilter {
+    date: String
+    media: [AppointmentMedium]
+    specialisms: [String]
+    type: AppointmentType!
+  }
+
+  type Counsellor {
+    id: ID!
+    appointmentMedia: [AppointmentMedium]!
+    appointments: [Appointment]!
+    appointmentTypes: [AppointmentType]!
+    firstName: String!
+    lastName: String!
+    specialisms: [Specialism]!
+  }
+
+  type Specialism {
+    id: ID!
+    name: String!
+  }
+
   type Query {
     appointment(id: ID!): Appointment
+    appointments(
+      filter: AppointmentsFilter
+      orderBy: AppointmentsOrderBy
+    ): [Appointment]!
+    appointmentMedia: [AppointmentMedium]!
+    appointmentMedium(id: ID!): AppointmentMedium
     counsellor(id: ID!): Counsellor
+    specialism(id: ID!): Specialism
+    specialisms: [Specialism]!
   }
 `
