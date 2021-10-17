@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { motion } from 'framer-motion'
 import { transparentize } from 'polished'
 
 export const Wrapper = styled.div({
@@ -7,18 +8,21 @@ export const Wrapper = styled.div({
   display: 'flex',
   justifyContent: 'center',
   left: 0,
+  padding: '4vmin',
   position: 'fixed',
   right: 0,
   top: 0,
+  zIndex: 1,
 })
 
-export const Backdrop = styled.div(
+export const Backdrop = styled(motion.div)(
   ({
     theme: {
       colors: { black },
     },
   }) => ({
-    background: transparentize(0.8, black),
+    backdropFilter: 'blur(1rem)',
+    background: transparentize(0.5, black),
     bottom: 0,
     left: 0,
     position: 'fixed',
@@ -27,7 +31,7 @@ export const Backdrop = styled.div(
   }),
 )
 
-export const Modal = styled.div(
+export const Modal = styled(motion.div)(
   ({
     theme: {
       colors: { white },
@@ -35,8 +39,9 @@ export const Modal = styled.div(
   }) => ({
     backgroundColor: white,
     borderRadius: '1rem',
-    maxWidth: '480px',
-    padding: '1rem',
+    maxWidth: '640px',
+    padding: '4vmin',
+    position: 'relative',
     width: '100%',
     zIndex: 1,
   }),

@@ -1,15 +1,18 @@
+import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import sortBy from 'lodash.sortby'
+import { useIntersection, useMedia } from 'react-use'
 
 import { useQueryParams } from 'src/hooks'
-import { Box, Columns, FormGroup } from 'src/components/Core'
+import { Box, Columns, FormGroup, Main } from 'src/components/Core'
 import { AppointmentList } from 'src/components/AppointmentList'
 import { AppointmentMediaControl } from 'src/components/AppointmentMediaControl'
 import { AppointmentSpecialism } from 'src/components/AppointmentSpecialism'
 import { Heading } from 'src/components/Heading'
+import { ModalAppointmentBookingConfirmation } from 'src/components/ModalAppointmentBookingConfirmation'
 import { RadioInput } from 'src/components/RadioInput'
-import { Title } from 'src/components/Title'
+import { SelectDayHeader } from 'src/components/SelectDayHeader'
 import availabilityMock from 'src/availability-mock.json'
 
 import { GetSpecialismsData } from './App.types'
@@ -24,11 +27,26 @@ export function App() {
   const { push } = useHistory()
   const query = useQueryParams()
 
+  const confirmationButtonRef = useRef(null)
+
+  const isLargeScreen = useMedia('(min-width: 1080px)')
+  const intersection = useIntersection(confirmationButtonRef, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1,
+  })
+
+  const confirmationButtonObscured =
+    intersection && intersection.intersectionRatio < 1
+
+  const [confirmationModalVisible, setConfirmationModalVisible] =
+    useState(false)
+
   const { data } = useQuery<GetSpecialismsData>(queries.GET_SPECIALISMS)
   const specialisms = data?.specialisms || []
 
   const selectedSpecialisms = query.getAll('specialism')
-  const type = query.get('type')
+  const selectedAppointmentType = query.get('type')
 
   if (!query.get('date')) {
     query.set('date', today)
@@ -39,18 +57,18 @@ export function App() {
     <>
       <Styled.Global />
 
-      <Styled.Centered>
-        <Styled.Main>
-          <Title>Book an appointment</Title>
+      <ModalAppointmentBookingConfirmation visible={confirmationModalVisible} />
 
-          <Columns gap="4vmin" minWidth="480px">
-            <Styled.FilterBox>
+      <Styled.Centered>
+        <Main>
+          <Columns columns={isLargeScreen ? 2 : 1} gap="4vmin">
+            <Styled.FilterBox isSticky={isLargeScreen}>
               <FormGroup>
                 <Heading>What type of appointment do you need?</Heading>
 
                 <Styled.Options>
                   <RadioInput
-                    checked={type === 'consultation'}
+                    checked={selectedAppointmentType === 'consultation'}
                     description="If you've never had a therapy session with Spill before, select this option. A consultation is a short meeting that will help us tailor future sessions to your needs."
                     heading="Consultation"
                     name="type"
@@ -61,7 +79,7 @@ export function App() {
                   />
 
                   <RadioInput
-                    checked={type === 'one_off'}
+                    checked={selectedAppointmentType === 'one_off'}
                     description="Book a single session with one of our accredited therapists. There's no obligation to attend multiple sessions, but you can come back and book more if you need."
                     heading="One-off"
                     name="type"
@@ -103,11 +121,42 @@ export function App() {
 
             <Box>
               <FormGroup>
+                <SelectDayHeader />
+              </FormGroup>
+
+              {confirmationButtonObscured && (
+                <FormGroup>
+                  <Styled.BookAppointmentButton
+                    disabled={!query.get('appointment')}
+                    onClick={() =>
+                      query.get('appointment') &&
+                      setConfirmationModalVisible(true)
+                    }
+                  >
+                    Confirm appointment
+                  </Styled.BookAppointmentButton>
+                </FormGroup>
+              )}
+
+              <FormGroup grow>
                 <AppointmentList />
+              </FormGroup>
+
+              <FormGroup>
+                <Styled.BookAppointmentButton
+                  disabled={!query.get('appointment')}
+                  onClick={() =>
+                    query.get('appointment') &&
+                    setConfirmationModalVisible(true)
+                  }
+                  ref={confirmationButtonRef}
+                >
+                  Confirm appointment
+                </Styled.BookAppointmentButton>
               </FormGroup>
             </Box>
           </Columns>
-        </Styled.Main>
+        </Main>
       </Styled.Centered>
     </>
   )

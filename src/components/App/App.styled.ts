@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components'
 import { darken, readableColor, lighten } from 'polished'
 
-import { Box } from 'src/components/Core'
+import { Box, Button } from 'src/components/Core'
 
 export const Global = createGlobalStyle(
   ({
@@ -16,7 +16,6 @@ export const Global = createGlobalStyle(
     body: {
       background,
       margin: 0,
-      padding: '0 4vmin',
     },
   }),
 )
@@ -26,14 +25,10 @@ export const Centered = styled.div({
   justifyContent: 'center',
 })
 
-export const Main = styled.main({
-  maxWidth: '1400px',
-  width: '100%',
-})
-
-export const FilterBox = styled(Box)({
+export const FilterBox = styled(Box)<{ isSticky: boolean }>(({ isSticky }) => ({
   alignSelf: 'flex-start',
-})
+  ...(isSticky && { position: 'sticky', top: '4vmin' }),
+}))
 
 export const Options = styled.div({
   display: 'grid',
@@ -115,8 +110,13 @@ export const ClearSpecialismsButton = styled(Topic)(
       colors: { blue },
     },
   }) => ({
+    alignItems: 'center',
     background: blue,
     borderColor: blue,
     color: readableColor(blue),
+    display: 'flex',
+    justifyContent: 'center',
   }),
 )
+
+export const BookAppointmentButton = styled(Button)({ width: '100%' })

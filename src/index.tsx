@@ -10,12 +10,7 @@ import { AppointmentType } from 'src/types'
 import { App } from './components/App'
 import typeDefs from './typeDefs'
 import reportWebVitals from './reportWebVitals'
-import {
-  appointmentsVar,
-  appointmentMediaVar,
-  counsellorsVar,
-  specialismsVar,
-} from './cache'
+import { appointmentsVar, counsellorsVar, specialismsVar } from './cache'
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
@@ -24,6 +19,8 @@ const client = new ApolloClient({
         fields: {
           appointment: {
             read(_, { args }) {
+              console.log(args?.id)
+              console.log(appointmentsVar().find(({ id }) => id === args?.id))
               return appointmentsVar().find(({ id }) => id === args?.id)
             },
           },
@@ -38,7 +35,7 @@ const client = new ApolloClient({
               const appointments = appointmentsVar().filter(
                 ({ counsellor, startsAt }) => {
                   const mediaFilter = media.length
-                    ? counsellor.appointmentMedia.some(({ name }) =>
+                    ? counsellor.appointmentMedia.some(name =>
                         media.includes(name),
                       )
                     : true
@@ -70,16 +67,6 @@ const client = new ApolloClient({
               return appointments
             },
           },
-          appointmentMedia: {
-            read() {
-              return appointmentMediaVar()
-            },
-          },
-          appointmentMedium: {
-            read(_, { args }) {
-              return appointmentMediaVar().find(({ id }) => id === args?.id)
-            },
-          },
           counsellor: {
             read(_, { args }) {
               return counsellorsVar().find(({ id }) => id === args?.id)
@@ -107,8 +94,10 @@ const colors = {
   blue: '#041549',
   gray: '#f3f4f6',
   grayDark: '#374151',
+  red: 'crimson',
   teal: '#35D0BA',
   white: '#fff',
+  yellow: 'goldenrod',
 }
 
 const theme = {
@@ -116,10 +105,14 @@ const theme = {
     background: colors.gray,
     black: colors.black,
     blue: colors.blue,
+    error: colors.red,
     gray: colors.gray,
     grayDark: colors.grayDark,
+    red: colors.red,
     teal: colors.teal,
+    warning: colors.yellow,
     white: colors.white,
+    yellow: colors.yellow,
   },
 }
 

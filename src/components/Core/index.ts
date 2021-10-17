@@ -1,3 +1,5 @@
 export * from './Box.styled'
+export * from './Button.styled'
 export * from './Columns.styled'
 export * from './FormGroup.styled'
+export * from './Main.styled'

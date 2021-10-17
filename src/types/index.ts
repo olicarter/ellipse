@@ -1,16 +1,16 @@
+export const APPOINTMENT_MEDIA = ['chat', 'phone', 'video'] as const
+
+export const APPOINTMENT_TYPES = ['consultation', 'one_off'] as const
+
 export type Appointment = {
   id: string
   counsellor: Counsellor // Would always be defined IRL
   startsAt: string
 }
 
-export type AppointmentMedium = {
-  id: string
-  icon: string
-  name: 'chat' | 'phone' | 'video'
-}
+export type AppointmentMedium = typeof APPOINTMENT_MEDIA[number]
 
-export type AppointmentType = 'consultation' | 'one_off'
+export type AppointmentType = typeof APPOINTMENT_TYPES[number]
 
 export type Counsellor = {
   id: string

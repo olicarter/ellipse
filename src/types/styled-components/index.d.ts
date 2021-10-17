@@ -5,10 +5,14 @@ declare module 'styled-components' {
     | 'background'
     | 'black'
     | 'blue'
+    | 'error'
     | 'gray'
     | 'grayDark'
+    | 'red'
     | 'teal'
+    | 'warning'
     | 'white'
+    | 'yellow'
 
   export interface DefaultTheme {
     colors: {

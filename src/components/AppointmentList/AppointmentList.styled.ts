@@ -1,33 +1,22 @@
 import styled from 'styled-components'
-import { readableColor } from 'polished'
-
-export const Header = styled.header(
-  ({
-    theme: {
-      colors: { gray },
-    },
-  }) => ({
-    alignItems: 'center',
-    background: gray,
-    borderRadius: '100px',
-    color: readableColor(gray),
-    display: 'flex',
-    justifyContent: 'space-between',
-  }),
-)
+import { darken, lighten, readableColor, transparentize } from 'polished'
 
 export const Heading = styled.h3({
   margin: '0 0 1rem',
 })
 
-export const AppointmentTime = styled.div(
+export const AppointmentTime = styled.div<{ active: boolean }>(
   ({
+    active,
     theme: {
-      colors: { gray },
+      colors: { blue, gray },
     },
   }) => ({
-    background: gray,
+    background: active ? lighten(0.75, blue) : gray,
+    border: '3px solid',
+    borderColor: active ? blue : darken(0.1, gray),
     borderRadius: '100px',
+    color: readableColor(active ? lighten(0.75, blue) : gray),
     cursor: 'pointer',
     display: 'flex',
     padding: '0.5rem',
@@ -53,33 +42,17 @@ export const Time = styled.span({
   fontWeight: 600,
 })
 
-export const CounsellorName = styled.span(
+export const CounsellorName = styled.span<{ active: boolean }>(
   ({
+    active,
     theme: {
-      colors: { grayDark },
+      colors: { blue, gray },
     },
   }) => ({
-    color: grayDark,
+    color: transparentize(
+      0.33,
+      readableColor(active ? lighten(0.75, blue) : gray),
+    ),
     fontSize: '0.9rem',
-  }),
-)
-
-export const IconButton = styled.button(
-  ({
-    theme: {
-      colors: { blue },
-    },
-  }) => ({
-    alignItems: 'center',
-    appearance: 'none',
-    background: blue,
-    border: 'none',
-    borderRadius: '50%',
-    color: readableColor(blue),
-    cursor: 'pointer',
-    display: 'flex',
-    height: '3rem',
-    justifyContent: 'center',
-    width: '3rem',
   }),
 )
