@@ -31,7 +31,7 @@ export function ModalAppointmentBookingConfirmation({
     if (selectedAppointment && visible) {
       getAppointment({ variables: { id: selectedAppointment } })
     }
-  }, [selectedAppointment, visible])
+  }, [getAppointment, selectedAppointment, visible])
 
   const avatar = data?.appointment.counsellor.avatar
   const firstName = data?.appointment.counsellor.firstName

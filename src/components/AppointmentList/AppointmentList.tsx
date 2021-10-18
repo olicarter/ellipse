@@ -31,24 +31,23 @@ export function AppointmentList() {
       orderBy: 'startsAt',
     },
   })
-  const appointments = data?.appointments || []
-  const uniqueAppointments = uniqBy(appointments, 'startsAt')
-  const appointmentsString = JSON.stringify(uniqueAppointments)
+  const appointments = uniqBy(data?.appointments, 'startsAt')
+  const appointmentIDs = JSON.stringify(appointments.map(({ id }) => id))
 
   useEffect(() => {
-    if (!uniqueAppointments.find(({ id }) => selectedAppointment === id)) {
+    if (selectedAppointment && !appointmentIDs.includes(selectedAppointment)) {
       query.delete('appointment')
       push(`?${query.toString()}`)
     }
-  }, [appointmentsString])
+  }, [appointmentIDs, push, query, selectedAppointment])
 
   if (!selectedDate) return null
 
   return (
     <>
-      {uniqueAppointments.length ? (
+      {appointments.length ? (
         <div style={{ display: 'grid', gap: '1rem' }}>
-          {uniqueAppointments.map(
+          {appointments.map(
             ({ id, counsellor: { avatar, firstName, lastName }, startsAt }) => (
               <Styled.AppointmentTime
                 key={id}
