@@ -13,6 +13,7 @@ export const Header = styled.header(
     color: readableColor(gray),
     display: 'flex',
     justifyContent: 'space-between',
+    padding: '0.5rem',
   }),
 )
 

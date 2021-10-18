@@ -14,7 +14,7 @@ import { AppointmentSpecialism } from 'src/components/AppointmentSpecialism'
 import { Heading } from 'src/components/Heading'
 import { ModalAppointmentBookingConfirmation } from 'src/components/ModalAppointmentBookingConfirmation'
 import { RadioInput } from 'src/components/RadioInput'
-import { SelectDayHeader } from 'src/components/SelectDayHeader'
+import { SelectAppointmentDayHeader } from 'src/components/SelectAppointmentDayHeader'
 import availabilityMock from 'src/availability-mock.json'
 
 import { GetSpecialismsData } from './App.types'
@@ -157,7 +157,7 @@ export function App() {
 
             <Box>
               <FormGroup>
-                <SelectDayHeader />
+                <SelectAppointmentDayHeader />
               </FormGroup>
 
               {confirmationButtonObscured && (

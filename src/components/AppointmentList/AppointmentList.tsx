@@ -33,16 +33,14 @@ export function AppointmentList() {
   })
   const appointments = data?.appointments || []
   const uniqueAppointments = uniqBy(appointments, 'startsAt')
-  const firstAppointmentId = uniqueAppointments.length
-    ? uniqueAppointments[0].id
-    : null
+  const appointmentsString = JSON.stringify(uniqueAppointments)
 
   useEffect(() => {
     if (!uniqueAppointments.find(({ id }) => selectedAppointment === id)) {
       query.delete('appointment')
       push(`?${query.toString()}`)
     }
-  }, [firstAppointmentId])
+  }, [appointmentsString])
 
   if (!selectedDate) return null
 
