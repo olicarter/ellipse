@@ -55,7 +55,7 @@ export function AppointmentFilter() {
       <FormGroup>
         <Heading>How would you like to communicate?</Heading>
 
-        <Columns columns={APPOINTMENT_MEDIA.length} gap="1rem">
+        <Columns gap="1rem" minWidth="150px">
           {APPOINTMENT_MEDIA.map(medium => (
             <FormControls.AppointmentMedium key={medium} medium={medium} />
           ))}
