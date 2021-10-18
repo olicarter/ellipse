@@ -2,10 +2,16 @@ import { useHistory } from 'react-router-dom'
 import Icon from '@mdi/react'
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 import { addDays, format, formatISO, parseISO, subDays } from 'date-fns'
+import sortBy from 'lodash.sortby'
 
 import { useQueryParams } from 'src/hooks'
+import availabilityMock from 'src/availability-mock.json'
 
 import * as Styled from './SelectDayHeader.styled'
+
+// Get earliest date from mock availability date
+const today = sortBy(Object.values(availabilityMock).flat(), 'datetime')[0]
+  .datetime
 
 export function SelectDayHeader() {
   const { push } = useHistory()
@@ -13,7 +19,11 @@ export function SelectDayHeader() {
 
   const selectedDate = query.get('date')
 
-  if (!selectedDate) return null
+  if (!selectedDate) {
+    query.set('date', today)
+    push(`?${query.toString()}`)
+    return null
+  }
 
   return (
     <Styled.Header>
