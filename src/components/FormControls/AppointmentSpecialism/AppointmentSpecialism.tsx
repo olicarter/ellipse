@@ -27,7 +27,7 @@ export function AppointmentSpecialism({ id }: AppointmentSpecialismProps) {
   if (!name) return null
 
   return (
-    <Styled.AppointmentSpecialism
+    <Styled.Toggle
       key={id}
       active={selectedSpecialisms.includes(name)}
       onClick={() => {
@@ -46,6 +46,6 @@ export function AppointmentSpecialism({ id }: AppointmentSpecialismProps) {
       }}
     >
       {name}
-    </Styled.AppointmentSpecialism>
+    </Styled.Toggle>
   )
 }

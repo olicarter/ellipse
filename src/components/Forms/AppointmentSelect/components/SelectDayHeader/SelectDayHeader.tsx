@@ -5,9 +5,9 @@ import { addDays, format, formatISO, parseISO, subDays } from 'date-fns'
 
 import { useQueryParams } from 'src/hooks'
 
-import * as Styled from './SelectAppointmentDayHeader.styled'
+import * as Styled from './SelectDayHeader.styled'
 
-export function SelectAppointmentDayHeader() {
+export function SelectDayHeader() {
   const { push } = useHistory()
   const query = useQueryParams()
 

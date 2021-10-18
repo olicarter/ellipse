@@ -1,3 +1,5 @@
+import { sentenceCase } from 'change-case'
+
 import type { RadioInputProps } from './RadioInput.types'
 import * as Styled from './RadioInput.styled'
 
@@ -17,7 +19,7 @@ export function RadioInput({
         type="radio"
       />
       <div>
-        <Styled.Heading>{heading}</Styled.Heading>
+        <Styled.Heading>{sentenceCase(heading)}</Styled.Heading>
 
         <Styled.Description>{description}</Styled.Description>
       </div>

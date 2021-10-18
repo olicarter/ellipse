@@ -76,7 +76,7 @@ export function ModalAppointmentBookingConfirmation({
       <p dangerouslySetInnerHTML={{ __html: joiningInfo! }} />
 
       <Styled.WarningMessage>
-        You may now close your browser tab
+        There's nothing more to do here so you can just close this tab!
       </Styled.WarningMessage>
     </Modal>
   )

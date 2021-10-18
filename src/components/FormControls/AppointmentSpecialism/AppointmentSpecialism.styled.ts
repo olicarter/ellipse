@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { darken, readableColor, lighten } from 'polished'
 
-export const AppointmentSpecialism = styled.div<{ active?: boolean }>(
+export const Toggle = styled.div<{ active?: boolean }>(
   ({
     active,
     theme: {
