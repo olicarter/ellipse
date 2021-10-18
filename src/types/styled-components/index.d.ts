@@ -1,22 +1,10 @@
 import 'styled-components'
+import type { COLOR_NAMES } from 'src/contexts'
 
 declare module 'styled-components' {
-  type ColorName =
-    | 'background'
-    | 'black'
-    | 'blue'
-    | 'error'
-    | 'gray'
-    | 'grayDark'
-    | 'red'
-    | 'teal'
-    | 'warning'
-    | 'white'
-    | 'yellow'
-
   export interface DefaultTheme {
     colors: {
-      [key in ColorName]: string
+      [key in typeof COLOR_NAMES[number]]: string
     }
   }
 }
