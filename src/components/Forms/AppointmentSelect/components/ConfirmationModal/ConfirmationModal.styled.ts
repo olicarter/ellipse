@@ -8,6 +8,7 @@ export const CounsellorAvatar = styled.img({
   position: 'absolute',
   top: 0,
   transform: 'translate(-50%, -50%)',
+  userSelect: 'none',
   width: '10rem',
 })
 

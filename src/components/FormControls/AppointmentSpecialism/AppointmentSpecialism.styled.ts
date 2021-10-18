@@ -19,6 +19,7 @@ export const Toggle = styled.div<{ active?: boolean }>(
     fontWeight: 500,
     margin: '0.5rem',
     padding: '0.5rem 1rem',
+    userSelect: 'none',
     '>:first-child': {
       marginRight: active ? '0.5rem' : 0,
     },

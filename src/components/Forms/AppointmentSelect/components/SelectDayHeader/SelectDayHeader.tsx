@@ -10,8 +10,10 @@ import availabilityMock from 'src/availability-mock.json'
 import * as Styled from './SelectDayHeader.styled'
 
 // Get earliest date from mock availability date
-const today = sortBy(Object.values(availabilityMock).flat(), 'datetime')[0]
-  .datetime
+const { datetime: today } = sortBy(
+  Object.values(availabilityMock).flat(),
+  'datetime',
+)[0]
 
 export function SelectDayHeader() {
   const { push } = useHistory()

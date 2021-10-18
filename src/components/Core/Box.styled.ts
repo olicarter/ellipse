@@ -7,7 +7,6 @@ export const Box = styled.div(
       colors: { grayDark, white },
     },
   }) => ({
-    // backdropFilter: 'blur(1rem)',
     background: transparentize(0.5, white),
     border: '3px solid',
     borderColor: grayDark,

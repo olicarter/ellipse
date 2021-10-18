@@ -21,5 +21,6 @@ export const Button = styled.button<{ disabled?: boolean }>(
     justifyContent: 'center',
     opacity: disabled ? 0.5 : 1,
     padding: '0.5rem 1rem',
+    userSelect: 'none',
   }),
 )

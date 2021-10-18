@@ -14,6 +14,7 @@ export const Header = styled.header(
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0.5rem',
+    userSelect: 'none',
   }),
 )
 

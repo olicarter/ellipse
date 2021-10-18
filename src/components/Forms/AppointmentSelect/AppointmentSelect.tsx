@@ -2,10 +2,13 @@ import { useRef, useState } from 'react'
 import { useIntersection } from 'react-use'
 
 import { FormGroup } from 'src/components/Core'
-import { AppointmentList } from 'src/components/AppointmentList'
-import { ModalAppointmentBookingConfirmation } from 'src/components/ModalAppointmentBookingConfirmation'
 
-import { ConfirmButton, SelectDayHeader } from './components'
+import {
+  AppointmentList,
+  ConfirmationModal,
+  ConfirmButton,
+  SelectDayHeader,
+} from './components'
 
 export function AppointmentSelect() {
   const buttonRef = useRef(null)
@@ -18,7 +21,7 @@ export function AppointmentSelect() {
 
   return (
     <>
-      <ModalAppointmentBookingConfirmation visible={modalVisible} />
+      <ConfirmationModal visible={modalVisible} />
 
       <FormGroup>
         <SelectDayHeader />

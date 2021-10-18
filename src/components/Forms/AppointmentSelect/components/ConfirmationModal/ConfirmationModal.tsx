@@ -3,19 +3,17 @@ import { useLazyQuery } from '@apollo/client'
 import { format, parseISO } from 'date-fns'
 
 import { useQueryParams } from 'src/hooks'
-import { Modal } from 'src/components/Modal'
+import { Modal } from 'src/components/Core'
 
 import type {
-  ModalAppointmentBookingConfirmationProps,
+  ConfirmationModalProps,
   GetAppointmentData,
   GetAppointmentVars,
-} from './ModalAppointmentBookingConfirmation.types'
-import { queries } from './ModalAppointmentBookingConfirmation.gql'
-import * as Styled from './ModalAppointmentBookingConfirmation.styled'
+} from './ConfirmationModal.types'
+import { queries } from './ConfirmationModal.gql'
+import * as Styled from './ConfirmationModal.styled'
 
-export function ModalAppointmentBookingConfirmation({
-  visible,
-}: ModalAppointmentBookingConfirmationProps) {
+export function ConfirmationModal({ visible }: ConfirmationModalProps) {
   const query = useQueryParams()
 
   const selectedAppointment = query.get('appointment')

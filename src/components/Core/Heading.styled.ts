@@ -11,5 +11,6 @@ export const Heading = styled.h3(
     fontWeight: 600,
     margin: '0 0 1rem',
     padding: 0,
+    userSelect: 'none',
   }),
 )

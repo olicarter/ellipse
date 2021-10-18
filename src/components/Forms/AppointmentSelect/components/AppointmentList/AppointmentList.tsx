@@ -46,10 +46,10 @@ export function AppointmentList() {
   return (
     <>
       {appointments.length ? (
-        <div style={{ display: 'grid', gap: '1rem' }}>
+        <Styled.Appointments>
           {appointments.map(
             ({ id, counsellor: { avatar, firstName, lastName }, startsAt }) => (
-              <Styled.AppointmentTime
+              <Styled.Appointment
                 key={id}
                 active={selectedAppointment === id}
                 onClick={() => {
@@ -59,6 +59,7 @@ export function AppointmentList() {
                 }}
               >
                 <Styled.Avatar src={avatar} />
+
                 <Styled.Info>
                   <Styled.Time>
                     {format(new Date(startsAt), 'haaa')}-
@@ -69,10 +70,10 @@ export function AppointmentList() {
                     {firstName} {lastName}
                   </Styled.CounsellorName>
                 </Styled.Info>
-              </Styled.AppointmentTime>
+              </Styled.Appointment>
             ),
           )}
-        </div>
+        </Styled.Appointments>
       ) : (
         <div style={{ textAlign: 'center' }}>No appointments found</div>
       )}

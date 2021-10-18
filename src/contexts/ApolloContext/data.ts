@@ -33,12 +33,6 @@ export const counsellorsVar = makeVar<Counsellor[]>(
       ...rest
     }) => ({
       id: counsellorId,
-      // appointments: availabilityData[counsellorId].map(
-      //   ({ id: appointmentId, datetime: startsAt }) => ({
-      //     id: appointmentId,
-      //     startsAt,
-      //   }),
-      // ),
       appointmentMedia: appointment_mediums as AppointmentMedium[],
       appointmentTypes: appointment_types as AppointmentType[],
       avatar: `https://i.pravatar.cc/320?u=${counsellorId}`,

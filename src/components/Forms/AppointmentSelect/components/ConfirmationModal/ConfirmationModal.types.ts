@@ -1,7 +1,7 @@
 import type { Appointment } from 'src/types'
-import type { ModalProps } from 'src/components/Modal'
+import type { ModalProps } from 'src/components/Core'
 
-export type ModalAppointmentBookingConfirmationProps = {
+export type ConfirmationModalProps = {
   visible: ModalProps['visible']
 }
 

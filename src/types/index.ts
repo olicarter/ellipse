@@ -4,7 +4,7 @@ export const APPOINTMENT_TYPES = ['consultation', 'one_off'] as const
 
 export type Appointment = {
   id: string
-  counsellor: Counsellor // Would always be defined IRL
+  counsellor: Counsellor
   startsAt: string
 }
 
@@ -14,7 +14,6 @@ export type AppointmentType = typeof APPOINTMENT_TYPES[number]
 
 export type Counsellor = {
   id: string
-  // appointments: Appointment[]
   appointmentMedia: AppointmentMedium[]
   appointmentTypes: AppointmentType[]
   avatar: string

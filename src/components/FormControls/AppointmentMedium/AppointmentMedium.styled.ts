@@ -17,6 +17,7 @@ export const AppointmentMedium = styled.div<{ active?: boolean }>(
     display: 'flex',
     justifyContent: 'flex-start',
     padding: '0.5rem',
+    userSelect: 'none',
   }),
 )
 

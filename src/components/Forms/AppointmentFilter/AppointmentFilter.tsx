@@ -3,9 +3,8 @@ import { useQuery } from '@apollo/client'
 
 import { APPOINTMENT_MEDIA, APPOINTMENT_TYPES } from 'src/types'
 import { useQueryParams } from 'src/hooks'
-import { Columns, FormGroup, Heading } from 'src/components/Core'
+import { Columns, FormGroup, Heading, RadioInput } from 'src/components/Core'
 import { FormControls } from 'src/components/FormControls'
-import { RadioInput } from 'src/components/RadioInput'
 
 import { GetSpecialismsData } from './AppointmentFilter.types'
 import { queries } from './AppointmentFilter.gql'

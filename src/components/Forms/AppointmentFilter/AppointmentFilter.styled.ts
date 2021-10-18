@@ -33,5 +33,6 @@ export const UnselectSpecialismsButton = styled(Button)(
     justifyContent: 'center',
     margin: '0.5rem',
     padding: '0.5rem 1rem',
+    userSelect: 'none',
   }),
 )

@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 import { darken, lighten, readableColor, transparentize } from 'polished'
 
-export const Heading = styled.h3({
-  margin: '0 0 1rem',
+export const Appointments = styled.ul({
+  display: 'grid',
+  gap: '1rem',
+  listStyle: 'none',
+  margin: 0,
+  padding: 0,
 })
 
-export const AppointmentTime = styled.div<{ active: boolean }>(
+export const Appointment = styled.div<{ active: boolean }>(
   ({
     active,
     theme: {
