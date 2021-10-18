@@ -9,7 +9,6 @@ import type { AppointmentMedium, AppointmentType } from 'src/types'
 
 import type { ApolloProviderProps } from './ApolloContext.types'
 import { appointmentsVar, counsellorsVar, specialismsVar } from './data'
-import typeDefs from './typeDefs'
 
 const client = new ApolloClient({
   cache: new InMemoryCache({
@@ -89,7 +88,6 @@ const client = new ApolloClient({
       },
     },
   }),
-  typeDefs,
 })
 
 export function ApolloProvider({ children }: ApolloProviderProps) {

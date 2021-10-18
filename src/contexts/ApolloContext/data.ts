@@ -53,16 +53,18 @@ type AvailabilityData = {
 
 const availabilityData: AvailabilityData = availabilityMock
 
-const a: Appointment[] = []
+const appointments: Appointment[] = []
 
-Object.entries(availabilityData).forEach(([counsellorId, appointments]) => {
-  appointments.forEach(({ id, datetime }) =>
-    a.push({
-      id,
-      counsellor: counsellorsVar().find(({ id }) => id === counsellorId)!,
-      startsAt: datetime,
-    }),
-  )
-})
+Object.entries(availabilityData).forEach(
+  ([counsellorId, counsellorAppointments]) => {
+    counsellorAppointments.forEach(({ id, datetime }) => {
+      appointments.push({
+        id,
+        counsellor: counsellorsVar().find(({ id }) => id === counsellorId)!,
+        startsAt: datetime,
+      })
+    })
+  },
+)
 
-export const appointmentsVar = makeVar<Appointment[]>(a)
+export const appointmentsVar = makeVar<Appointment[]>(appointments)
