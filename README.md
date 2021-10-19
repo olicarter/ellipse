@@ -1,46 +1,27 @@
-# Getting Started with Create React App
+# Ellipse - @olicarter's interpretation of Spill's Frontend tech task
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tech decisions
 
-## Available Scripts
+- Using pnpm for dependency management as it's [very fast](https://pnpm.io/benchmarks)
+- Would use NextJS for production project (in-built SSG and SSR), but it's overkill for a test task.
+- Using TypeScript for the incredibly useful developer experience, catches most bugs during development.
+- Implemented animated background after my wife said it looked "boring". Performance takes a hit so would likely make the design more vibrant without the full viewport animation in production.
+- Decided on using query parameters for persisting state as allows for opening pre-filled forms from anywhere. Ideally wouldn't put selected appointment ID in query params as availability will change often and is unlikely to need to route to a pre-selected appointment directly. Only did this due to time constraints of test task. Alternate implementation for test task could've used mutations and local storage to persist booked appointment data.
 
-In the project directory, you can run:
+## Improvements
 
-### `yarn start`
+- Progressive avatar loading for better UX
+- Page title to indicate what the page is for and improve SEO
+- Persist booked appointment state
+- Tests. Ideal, but time consuming and not required for this task.
+- Move appointment filter and selection boxes onto 2 different pages for mobile to reduce scrolling distance.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Reasons for using some of the main packages
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [@apollo-client](https://www.apollographql.com/docs/react) - Allows for great component isolation and consistent local and remote data management syntax using GraphQL.
+- [@mdi/js and @mdi/react](https://materialdesignicons.com) - Huge icon library with React component that caters for most needs.
+- [date-fns](https://date-fns.org) - Modern and popular date/time manipulation.
+- [framer-motion](https://www.framer.com/motion) - Animation library with simple syntax and very useful AnimatePresence import that allows animation before unmounting a component.
+- [polished](https://polished.js.org) - Provides lots of useful functions for manipulating CSS.
+- [prettier](https://prettier.io) - Enforces code formatting consistency.
+- [styled-components](https://styled-components.com) - Allows simple and clean dynamic styling with an easy to understand syntax.
