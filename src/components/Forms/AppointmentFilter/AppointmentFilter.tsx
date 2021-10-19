@@ -20,6 +20,12 @@ export function AppointmentFilter() {
   const selectedSpecialisms = query.getAll('specialism')
   const selectedAppointmentType = query.get('type')
 
+  if (!selectedAppointmentType) {
+    query.set('type', 'one_off')
+    push(`?${query.toString()}`)
+    return null
+  }
+
   return (
     <>
       <FormGroup>
